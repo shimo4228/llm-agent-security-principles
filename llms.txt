@@ -1,0 +1,32 @@
+# llm-agent-security-principles
+
+> An Agent Skill (MIT) holding the structural security playbook for autonomous LLM agents. Three load-bearing principles — Security by Absence, Untrusted Content Boundary, One External Adapter — cover the threats web-app security (OWASP) does not: prompt injection, capability escalation through memory, and blast-radius accumulation.
+
+## Core documentation
+
+- [llms-full.txt](llms-full.txt): self-contained Q&A reference for AI agents (Project Facts, Prior Research, question-form H2 sections)
+- [README.md](README.md): human-facing narrative (install, three-principles table, curation model)
+- [SKILL.md](skills/llm-agent-security-principles/SKILL.md): full skill specification — three principles with code patterns, supporting defense patterns, 9-item anti-patterns checklist, 8 design review questions
+
+## Architecture
+
+- Three principles: **Security by Absence** (dangerous capabilities are never implemented, not restricted), **Untrusted Content Boundary** (all accumulated state — including the agent's own distilled output — is untrusted on read-back), **One External Adapter** (one agent process gets at most one pinned external side-effect surface)
+- Prohibition-strength hierarchy: **absence > scaffolding enforcement > untrusted boundary** — walk it top-down; drop a layer only when the current one genuinely cannot hold the capability
+- Supporting defense patterns: credential handling, HTTP client hardening (`allow_redirects=False` on authenticated sessions), LLM host allowlisting, config validation with fail-closed defaults, network isolation
+- Audit layer: 9-item anti-patterns checklist + 8 design review questions runnable against any capability-adding PR
+- Provenance: the "how" counterpart to [AAP ADR-0001..0004](https://github.com/shimo4228/agent-attribution-practice/tree/main/docs/adr); manually curated generalization of the operational variant inside [Contemplative Agent](https://github.com/shimo4228/contemplative-agent)
+
+## Standard reference
+
+- [Agent Skill specification](https://agentskills.io/specification): the skill format used by this repo
+- [SkillsMP marketplace](https://agentskills.io/specification): one-step install via `/skills add shimo4228/llm-agent-security-principles`
+
+## Sibling skills
+
+- [search-first](https://github.com/shimo4228/search-first): enforces a research-before-coding workflow with a 4-way Adopt / Extend / Compose / Build decision
+- [llms-txt-writer](https://github.com/shimo4228/llms-txt-writer): writes AI-facing docs optimized for ChatGPT / Perplexity / Gemini citation
+- [skill-comply](https://github.com/shimo4228/skill-comply): measures whether agents actually follow skill / rule definitions
+- [context-sync](https://github.com/shimo4228/context-sync): audits and fixes project documentation roles
+- [skill-stocktake](https://github.com/shimo4228/skill-stocktake): quality audit for skills and commands
+- [rules-distill](https://github.com/shimo4228/rules-distill): scan installed skills, extract cross-cutting principles, and distill them into rules
+- [learn-eval](https://github.com/shimo4228/learn-eval): extract reusable patterns from sessions, self-evaluate quality, and save to the right location
