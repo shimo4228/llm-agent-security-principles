@@ -1,6 +1,6 @@
 # llm-agent-security-principles
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/shimo4228/llm-agent-security-principles) [![GitMCP](https://img.shields.io/endpoint?url=https://gitmcp.io/badge/shimo4228/llm-agent-security-principles)](https://gitmcp.io/shimo4228/llm-agent-security-principles) [![View Code Wiki](https://assets.codewiki.google/readme-badge/static.svg)](https://codewiki.google/github.com/shimo4228/llm-agent-security-principles)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/shimo4228/llm-agent-security-principles) [![GitMCP](https://img.shields.io/endpoint?url=https://gitmcp.io/badge/shimo4228/llm-agent-security-principles)](https://gitmcp.io/shimo4228/llm-agent-security-principles)
 
 An [Agent Skill](https://agentskills.io/specification) holding the **structural security playbook for autonomous LLM agents**. Web-app security (OWASP, auth, input validation) does not cover the threats that matter most here: prompt injection, capability escalation through memory, and blast-radius accumulation. The core insight: you cannot reliably restrict an LLM's behavior at runtime — you must shape the system so dangerous behaviors are structurally impossible.
 
