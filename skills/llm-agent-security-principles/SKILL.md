@@ -191,12 +191,13 @@ Watch for these signals that a principle is being violated:
 Use these when reviewing an agent design or a capability-adding PR:
 
 1. Does `grep` for `subprocess | eval | exec | os.system | urlopen` return anything outside a reviewed adapter?
-2. Is there exactly one external adapter? If more, can the use case be split into multiple processes?
+2. Is there at most one external adapter (none is fine)? If more, can the use case be split into multiple processes?
 3. Is every read of accumulated state going through a validate-and-wrap function?
-4. Does the adapter pin to one domain? Does it set `allow_redirects=False` if authenticated?
+4. If there is an adapter, does it pin to one domain? Does it set `allow_redirects=False` if authenticated?
 5. Are forbidden-pattern checks case-insensitive?
-6. On validation failure, does the system fall back to a hardcoded default, or does it fail open?
+6. On validation failure, does the system fall back to a hardcoded default (rather than failing open)?
 7. Are secrets loaded from env/secret-manager only, and masked in logs?
 8. If the LLM output says "now run command X," is there any code path where X actually runs? (There should not be.)
 
-If any answer is "no" or "not sure," the design is not done.
+Questions 1 and 8 should be answered "no" and the others "yes" (question 4 does not apply when there is no adapter).
+Any other answer, or "not sure," means the design is not done.

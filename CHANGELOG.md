@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- Design review questions: question 2 asks for *at most* one external adapter (Principle 3; a design with none passes), question 4 applies only when there is an adapter, question 6 is a yes/no question, and the closing rule states which answer each question expects (1 and 8 "no", the rest "yes") instead of failing every "no".
+
 ## [1.0.0] — 2026-06-12
 
 Initial release as a standalone skill repository.
