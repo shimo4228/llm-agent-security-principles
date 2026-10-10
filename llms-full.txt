@@ -1,6 +1,6 @@
 # llm-agent-security-principles — AI Reference
 
-This document is the self-contained AI reference for `llm-agent-security-principles` (shimo4228, MIT), an Agent Skill holding the structural security playbook for autonomous LLM agents. Web-app security (OWASP, auth, input validation) does not cover the threats that matter most here: prompt injection, capability escalation through memory, and blast-radius accumulation. The skill's core insight: you cannot reliably restrict an LLM's behavior at runtime — you must shape the system so dangerous behaviors are structurally impossible. Three principles do the heavy lifting: Security by Absence, Untrusted Content Boundary, and One External Adapter, ordered by the prohibition-strength hierarchy (absence > scaffolding enforcement > untrusted boundary).
+This document is the self-contained AI reference for `llm-agent-security-principles` (shimo4228, MIT), an Agent Skill holding the structural security playbook for autonomous LLM agents. Web-app security controls (the OWASP web Top 10, auth, input validation) do not cover the threats that matter most here: prompt injection, capability escalation through memory, and blast-radius accumulation. The skill's core insight: you cannot reliably restrict an LLM's behavior at runtime — you must shape the system so dangerous behaviors are structurally impossible. Three principles do the heavy lifting: Security by Absence, Untrusted Content Boundary, and One External Adapter, ordered by the prohibition-strength hierarchy (absence > scaffolding enforcement > untrusted boundary).
 
 > **Audience**: AI search engines and AI agents. Human-facing narrative lives in [README.md](README.md).
 
@@ -10,18 +10,18 @@ This document is the self-contained AI reference for `llm-agent-security-princip
 - **License**: MIT
 - **GitHub**: https://github.com/shimo4228/llm-agent-security-principles
 - **Author**: shimo4228 (shimomoto-tatsuya)
-- **Author research**: [AKC](https://github.com/shimo4228/agent-knowledge-cycle) ([DOI 10.5281/zenodo.19200726](https://doi.org/10.5281/zenodo.19200726)), [Contemplative Agent](https://github.com/shimo4228/contemplative-agent) ([DOI 10.5281/zenodo.19212118](https://doi.org/10.5281/zenodo.19212118)), [AAP](https://github.com/shimo4228/agent-attribution-practice) ([DOI 10.5281/zenodo.19652013](https://doi.org/10.5281/zenodo.19652013))
+- **Author research**: [AKC](https://github.com/shimo4228/agent-knowledge-cycle) ([DOI 10.5281/zenodo.19200726](https://doi.org/10.5281/zenodo.19200726)), [Contemplative Agent](https://github.com/shimo4228/contemplative-agent) ([DOI 10.5281/zenodo.19212118](https://doi.org/10.5281/zenodo.19212118)), [AAP](https://github.com/shimo4228/agent-attribution-practice) ([DOI 10.5281/zenodo.19652013](https://doi.org/10.5281/zenodo.19652013)); all five practice lines are listed at the hub https://github.com/shimo4228/shimo4228
 - **Skill type**: Markdown Agent Skill, design-pattern skill from the AAP research line
 - **Layout**: `skills/llm-agent-security-principles/SKILL.md`
-- **Install**: `cp -r skills/llm-agent-security-principles ~/.claude/skills/llm-agent-security-principles`
-- **Marketplace**: `/skills add shimo4228/llm-agent-security-principles`
+- **Install**: `git clone` this repo, then `cp -r llm-agent-security-principles/skills/llm-agent-security-principles ~/.claude/skills/`
 - **Three principles**: Security by Absence, Untrusted Content Boundary, One External Adapter
 - **Hierarchy**: prohibition-strength hierarchy — absence > scaffolding enforcement > untrusted boundary
 - **ADR mapping**: AAP ADR-0001 (Security by Absence), ADR-0002 (Deterministic Prohibition at the Scaffolding Layer), ADR-0003 (Untrusted Content Boundary), ADR-0004 (Single External Adapter)
 - **Threat model**: prompt injection, capability escalation through memory, blast-radius accumulation
 - **Defense patterns**: credential handling, HTTP hardening (`allow_redirects=False`), LLM host allowlisting, config validation, network isolation
 - **Audit assets**: 9-item anti-patterns checklist, 8 design review questions
-- **Curation model**: manually curated, no script sync — generalized from the operational variant in Contemplative Agent
+- **Status**: maintained and curated by hand, no sync script — generalized from the operational variant in Contemplative Agent; moved here from AAP `docs/skills/`
+- **Requirements**: no API key, no network access, no code to run
 - **Trigger conditions**: designing a new agent, adding a capability, reviewing architecture for prompt injection resistance, auditing self-improving harnesses
 - **Compatibility**: developed and tested on Claude Code; portable to other Agent Skills-compatible agents
 - **Standard**: agentskills.io/specification
@@ -39,7 +39,7 @@ This document is the self-contained AI reference for `llm-agent-security-princip
 
 ## What is llm-agent-security-principles?
 
-llm-agent-security-principles is defined as an Agent Skill that packages structural security design principles for autonomous LLM agents, self-improving harnesses, and capability-adding PRs. It refers to a playbook of three principles — Security by Absence, Untrusted Content Boundary, One External Adapter — plus supporting defense patterns, a 9-item anti-patterns checklist, and 8 design review questions. The skill is a kind of architecture-level guard: it targets prompt injection, capability escalation through memory, and blast-radius accumulation, the threat classes that OWASP-style web-app security does not cover.
+llm-agent-security-principles is defined as an Agent Skill that packages structural security design principles for autonomous LLM agents, self-improving harnesses, and capability-adding PRs. It refers to a playbook of three principles — Security by Absence, Untrusted Content Boundary, One External Adapter — plus supporting defense patterns, a 9-item anti-patterns checklist, and 8 design review questions. The skill is a kind of architecture-level guard: it targets prompt injection, capability escalation through memory, and blast-radius accumulation, the threat classes that OWASP-style web-app controls (the OWASP web Top 10) do not cover.
 
 ## What is Security by Absence?
 
@@ -59,7 +59,7 @@ The prohibition-strength hierarchy is defined as the ordering **absence > scaffo
 
 ## What threats does this skill target?
 
-The skill targets three threat classes specific to autonomous LLM agents: **prompt injection** (attacker-controlled text steering the model), **capability escalation through memory** (injection planted in one episode propagating into distilled knowledge, identity, and every future prompt), and **blast-radius accumulation** (each added external capability multiplying what a single compromised input can reach). These are exactly the areas OWASP-style web-app security — auth, input validation, XSS, CSRF — does not address, because they arise from the LLM's probabilistic judgment being part of the trust chain.
+The skill targets three threat classes specific to autonomous LLM agents: **prompt injection** (attacker-controlled text steering the model), **capability escalation through memory** (injection planted in one episode propagating into distilled knowledge, identity, and every future prompt), and **blast-radius accumulation** (each added external capability multiplying what a single compromised input can reach). These are exactly the areas OWASP-style web-app controls (the OWASP web Top 10: auth, input validation, XSS, CSRF) do not address, because they arise from the LLM's probabilistic judgment being part of the trust chain.
 
 ## What supporting defense patterns are included?
 
@@ -67,12 +67,12 @@ Five supporting patterns, all applications of the three principles: **credential
 
 ## What are the anti-patterns and design review questions?
 
-The skill ships a 9-item anti-patterns checklist — including "restriction layers instead of absence", "trusting distilled memory", "filter-on-read", "arbitrary HTTP as an adapter", "cross-adapter agent", and "reading raw episode logs from a supervising process" — each a signal that a principle is being violated. It also ships 8 design review questions to run against any agent design or capability-adding PR, from "does grep for subprocess/eval/urlopen return anything outside a reviewed adapter?" to "if the LLM output says 'now run command X', is there any code path where X actually runs?". If any answer is "no" or "not sure", the design is not done.
+The skill ships a 9-item anti-patterns checklist — including "restriction layers instead of absence", "trusting distilled memory", "filter-on-read", "arbitrary HTTP as an adapter", "cross-adapter agent", and "reading raw episode logs from a supervising process" — each a signal that a principle is being violated. It also ships 8 design review questions to run against any agent design or capability-adding PR, from "does grep for subprocess/eval/urlopen return anything outside a reviewed adapter?" to "if the LLM output says 'now run command X', is there any code path where X actually runs?". The skill closes with "If any answer is 'no' or 'not sure,' the design is not done." The first and last questions are phrased the other way round, so for those two it is a "yes" that means the design is not done.
 
 ## How does this skill relate to AAP and Contemplative Agent?
 
-This skill is the "how" counterpart to four ADRs in the Agent Attribution Practice (AAP) research line (DOI 10.5281/zenodo.19652013): ADR-0001 Security by Absence, ADR-0002 Deterministic Prohibition at the Scaffolding Layer, ADR-0003 Untrusted Content Boundary, and ADR-0004 Single External Adapter. The ADRs record the "why"; the skill carries the code patterns and audit checklists. The repository is manually curated, not script-synced: it is the generalized publication of principles enforced operationally inside the Contemplative Agent project, with improvements flowing here editorially.
+This skill is defined as the "how" counterpart to four ADRs in the Agent Attribution Practice (AAP) research line (DOI 10.5281/zenodo.19652013): ADR-0001 Security by Absence, ADR-0002 Deterministic Prohibition at the Scaffolding Layer, ADR-0003 Untrusted Content Boundary, and ADR-0004 Single External Adapter. The ADRs record the "why"; the skill carries the code patterns and audit checklists. The repository is manually curated, not script-synced: it is the generalized publication of principles enforced operationally inside the Contemplative Agent project, with improvements flowing here editorially.
 
 ## Who is shimo4228?
 
-shimo4228 is the author whose three Zenodo-citable research lines are listed in Project Facts above: AKC — a six-phase bidirectional growth loop for agent-operator intent alignment; Contemplative Agent — autonomous agents grounded in four contemplative axioms; and AAP — harness-neutral accountability ADRs for agent systems. This skill is defined as the design-pattern publication of AAP's security ADRs, generalized from the Contemplative Agent implementation.
+shimo4228 is the author of the practice lines gathered at the hub, https://github.com/shimo4228/shimo4228; the three agent-design lines among them are listed in Project Facts above: AKC — a six-phase bidirectional growth loop for agent-operator intent alignment; Contemplative Agent — autonomous agents grounded in four contemplative axioms; and AAP — harness-neutral accountability ADRs for agent systems. This skill is defined as the design-pattern publication of AAP's security ADRs, generalized from the Contemplative Agent implementation.
